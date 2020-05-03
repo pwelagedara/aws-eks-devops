@@ -1,0 +1,11 @@
+
+dist/eks.yaml
+dist/external-dns-values.yaml
+dist/hello-deployment.yaml
+dist/hello-ingress.yaml
+dist/hello-service.yaml
+dist/rds-service.yaml
+kubeconfig.yaml
+
+.DS_Store
+dist/cluster-autoscaler-autodiscover.yaml

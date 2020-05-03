@@ -1,0 +1,47 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: CLUSTER_NAME
+  region: REGION
+nodeGroups:
+  - name: ng-on-demand
+    desiredCapacity: ON_DEMAND_DESIRED_CAPACITY
+    privateNetworking: true
+    instanceType: ON_DEMAND_INSTANCE_TYPE
+    labels:
+      lifecycle: OnDemand
+    ssh:
+      allow: true
+      publicKeyName: KEY_PAIR
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+        externalDNS: true
+        albIngress: true
+  - name: ng-spot
+    minSize: SPOT_MIN
+    maxSize: SPOT_MAX
+    privateNetworking: true
+    instancesDistribution:
+      instanceTypes:
+        - SPOT_INSTANCE_TYPE_1
+        - SPOT_INSTANCE_TYPE_2
+      onDemandBaseCapacity: 0
+      onDemandPercentageAboveBaseCapacity: 0
+    labels:
+      lifecycle: Ec2Spot
+      intent: apps
+    taints:
+      spotInstance: "true:PreferNoSchedule"
+    tags:
+      k8s.io/cluster-autoscaler/node-template/label/lifecycle: Ec2Spot
+      k8s.io/cluster-autoscaler/node-template/label/intent: apps
+      k8s.io/cluster-autoscaler/node-template/taint/spotInstance: "true:PreferNoSchedule"
+    ssh: 
+      allow: true
+      publicKeyName: KEY_PAIR
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+        externalDNS: true
+        albIngress: true

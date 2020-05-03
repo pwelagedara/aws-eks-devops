@@ -1,0 +1,7 @@
+{
+    "namespace": "default",
+    "awsCredentialsId": "86c8f5ec-1ce1-4e94-80c2-18e23bbd724a",
+    "app": {
+      "name": "aws-eks-devops"
+    }
+  }

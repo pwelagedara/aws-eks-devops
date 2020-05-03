@@ -1,0 +1,14 @@
+master:
+  adminUser: "admin"
+  installPlugins:
+    - kubernetes:1.21.2
+    - workflow-job:2.36
+    - workflow-aggregator:2.6
+    - credentials-binding:1.20
+    - git:4.0.0
+    - blueocean:1.22.0
+    - amazon-ecr:1.6
+
+  scriptApproval:
+    - "new groovy.json.JsonSlurperClassic"
+    - "method groovy.json.JsonSlurperClassic parseText java.lang.String"

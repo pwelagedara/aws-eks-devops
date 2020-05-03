@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: hello-kubernetes
+  annotations:
+    kubernetes.io/ingress.class: alb
+    # Required to use ClusterIP
+    alb.ingress.kubernetes.io/target-type: ip
+    # Required to place on public-subnet
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    # Use TLS registered to our domain. ALB will terminate the certificate
+    alb.ingress.kubernetes.io/certificate-arn: CERTIFICATE_ARN
+    # Respond to one port because HTTPS redirection does not work
+    # for both ports use '[{"HTTP": 80}, {"HTTPS":443}]'
+    # FIXME: 22/02/2020 Enable both ports
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+    # redirect to port 80 to port 443
+    # FIXME: 22/02/2020 This does not work
+    alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
+spec:
+  rules:
+  - host: HOST
+    http:
+      paths:
+      - backend:
+          serviceName: hello-kubernetes
+          servicePort: 80
+        path: /*
