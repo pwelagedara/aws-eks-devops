@@ -9,7 +9,7 @@ Please exercise caution when running teardown scripts. Consider cleaning up manu
 - A Key Pair in your region
 - A Hosted Zone in Route 53( e.g. example.com)
 - An ACM Public Certificate for example.com and *.example.com
-- AWS Cli
+- AWS CLI
 - eksctl
 - kubectl
 - helm 3
